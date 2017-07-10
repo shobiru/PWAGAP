@@ -1,0 +1,58 @@
+var cacheName = 'gap-solver-v1';
+var filesToCache = [
+    '/gap-solver/',
+    '/gap-solver/index.html',
+    '/gap-solver/scripts/app.js',
+    '/gap-solver/scripts/AAAglobalVars.js',
+    '/gap-solver/scripts/constructive.js',
+    '/gap-solver/scripts/knapsackDP.js',
+    '/gap-solver/scripts/lagrangian.js',
+    '/gap-solver/scripts/loadGap.js',
+    '/gap-solver/scripts/localSearch.js',
+    '/gap-solver/scripts/parallel.js',
+    '/gap-solver/styles/bulma.css',
+    '/gap-solver/styles/inline.css'
+];
+
+self.addEventListener('install', function(e){
+    console.log('[Service Worker] installing...');
+    e.waitUntil(
+        caches.open(cacheName).then(function(cache){
+            console.log('[Service Worker] adding App Shell files to cache...');
+            return cache.addAll(filesToCache);
+        })
+    );
+});
+
+self.addEventListener('activate', function(e){
+    console.log('[Service Worker] activated');
+    //Facciamo in modo che il servizio si aggiorni in caso ci sia una nuova versione
+    e.waitUntil(
+        caches.keys().then(function(keyList){
+            //Ritorna un array di risultati quando tutte le promise sono state
+            //completate
+            return Promise.all(keyList.map(function(key){
+                //se il nome della cache è diverso da quello salvato cancella
+                //l'elemento dalla cache
+                if(key !== cacheName){
+                    console.log('[Service Worker] Removing old cache', key);
+                    return caches.delete(key);
+                }
+            }));
+        })
+    );
+    //Questo statement risolve un problema riscontrato con l'attivazione del service
+    //worker, troppo lenta. In questo modo l'attivazione viene velocizzata.
+    return self.clients.claim();
+});
+
+//Intercetta l'evento di richiesta di una pagina per servire la richiesta dalla cache
+//nel caso in cui fosse possibile
+self.addEventListener('fetch', function(e){
+    console.log('[Service Worker] Fetch', e.request.url);
+    e.respondWith(
+        caches.match(e.request).then(function(response){
+            return response || fetch(e.request);
+        })
+    );
+});

@@ -1,0 +1,13 @@
+.header {
+  background-color: #1e88e5 !important;
+}
+
+.header-text {
+  align-self: center;
+  font-weight: 400 !important;
+  color: #fff !important;
+}
+
+.card-title {
+  padding: 10px 0 0 10px;
+}

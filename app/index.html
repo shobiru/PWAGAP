@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAP Solver PWA</title>
+  <!-- Manifest PWA -->
+  <link rel="manifest" href="/gap-solver/manifest.json">
+  <!-- Add to home screen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="GAP Solver">
+  <link rel="apple-touch-icon" href="/gap-solver/app/images/icons/apple-icon-152x152.png">
+  <!-- Tile for Windows -->
+  <meta name="msapplication-TileImage" content="/gap-solver/app/images/icons/ms-icon-144x144.png">
+  <meta name="msapplication-TileColor" content="#1e88e5">
+  <!-- Style sheets -->
+  <link rel="stylesheet" type="text/css" href="/gap-solver/app/styles/bulma.css">
+  <link rel="stylesheet" type="text/css" href="/gap-solver/app/styles/inline.css">
+  <!-- Scripts -->
+  <script src="/gap-solver/app/scripts/parallel.js"></script>
+  <script src="/gap-solver/app/scripts/AAAglobalVars.js"></script>
+  <script src="/gap-solver/app/scripts/loadGap.js"></script>
+  <script src="/gap-solver/app/scripts/constructive.js"></script>
+  <script src="/gap-solver/app/scripts/localSearch.js"></script>
+  <script src="/gap-solver/app/scripts/knapsackDP.js"></script>
+  
+</head>
+<body>
+
+  <nav class="nav has-shadow header">
+    <div class="nav-center">
+      <div class="content is-medium">
+        <h1 class="title header-text"> GAP Solver PWA </h1>
+      </div>
+    </div>
+  </nav>
+
+  <div style="height: 20px;"></div>
+
+  <div class="section">
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <div class="content card-title">
+            <h1>
+              Load remote
+            </h1>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              <input id="inputRemote" class="input is-medium" type="text" placeholder="Path" value="Sgapa_0.json">
+              </input>
+            </p>
+            <button class="button is-medium is-light" onclick="readWithCORS()">
+              Load
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div style="height: 20px;"></div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="content card-title">
+            <h1>
+              Load local
+            </h1>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              <input id="inputLocal" class="input is-medium" type="file" value="">
+              </input>
+            </p>
+            <button class="button is-medium is-light" onclick="loadLocalFile()">
+              Load
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div style="height: 20px;"></div> 
+
+      <button class="button is-primary is-large is-fullwidth" onclick="solveConstruct()">
+          Solve constructive
+      </button>
+
+      <div style="height: 20px;"></div> 
+
+      <h1 class="title is-1 has-text-centered">
+          Lagrangian matheuristics
+      </h1>
+
+      <div style="height: 20px;"></div> 
+
+      <button class="button is-primary is-large is-fullwidth" onclick="startWorker({path:'lagrangian.js', func:'run_lagrCap'})">
+          Lagrangian, capacities relaxed
+      </button>
+
+      <div style="height: 20px;"></div> 
+
+      <button class="button is-primary is-large is-fullwidth" onclick="startWorker({path:'lagrangian.js', func:'run_lagrAss'})">
+          Lagrangian, assignments relaxed
+      </button>
+
+      <div style="height: 20px;"></div> 
+
+      <label class="label is-large">Iterations</label>
+      <p class="control">
+        <input id="inputIter" class="input is-medium" type="number" value="-1">
+        </input>
+      </p>
+      <label class="label is-large">Alpha</label>
+      <p class="control">
+        <input id="inputAlpha" class="input is-medium" type="number" value="2.5">
+        </input>
+      </p>
+      <label class="label is-large">Min Alpha</label>
+      <p class="control">
+        <input id="inputMinAlpha" class="input is-medium" type="number" value="0.001">
+        </input>
+      </p>
+
+      <div style="height: 20px;"></div>
+
+      <div class="field">
+        <label class="label is-large">Results</label>
+        <p class="control">
+          <textarea id="outputText" class="textarea">
+          </textarea>
+        </p>
+      </div>
+
+    <div>
+  </div>
+
+<script src="/gap-solver/app/scripts/app.js"></script>
+
+</body>
+</html>

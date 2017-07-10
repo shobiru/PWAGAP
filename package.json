@@ -1,0 +1,14 @@
+{
+  "name": "gap-solver",
+  "version": "1.0.0",
+  "description": "An HTML5 and JS web application to solve GAP problems with Lagrangian euristics.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shobiru/gap-solver.git"
+  },
+  "author": "Christian Manfredi",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "sw-precache": "^5.2.0"
+  }
+}
